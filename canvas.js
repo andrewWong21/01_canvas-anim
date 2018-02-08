@@ -12,7 +12,7 @@ var pulse = function() {
     var radiusModifier = 5;
     
     var draw = function() {
-        ctx.clearRect(0, 0, 500, 500);
+        ctx.clearRect(0, 0, 800, 600);
         ctx.arc(canvas.width/2, canvas.height/2, radius, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
@@ -31,14 +31,14 @@ var pulse = function() {
 
 var dvd = function() {
     window.cancelAnimationFrame(requestID);
-    var speedModifierX = 10;
-    var speedModifierY = 10;
+    var speedModifierX = 3;
+    var speedModifierY = 3;
     var radius = 30;
-    var newX = (Math.random() * (canvas.width-radius+1))+radius;
-    var newY = (Math.random() * (canvas.height-radius+1))+radius;
+    var newX = (Math.random() * (canvas.width-2*radius))+radius;
+    var newY = (Math.random() * (canvas.height-2*radius))+radius;
     
     var draw = function() {
-        ctx.clearRect(0, 0, 500, 500);
+        ctx.clearRect(0, 0, 800, 600);
         ctx.arc(newX, newY, radius, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
@@ -52,6 +52,7 @@ var dvd = function() {
         newX = newX + speedModifierX;
         newY = newY + speedModifierY;
         requestID = window.requestAnimationFrame(draw);
+
     };
     
     draw();
@@ -61,9 +62,13 @@ var stop = function() {
     window.cancelAnimationFrame(requestID);
 };
 
+var clear = function() {
+    ctx.clearRect(0, 0, 800, 600);
+};
+
 ctx.fillStyle = "#87ceeb";
 canvas.addEventListener("click", stop);
 pulseButton.addEventListener("click", pulse);
 DVDButton.addEventListener("click", dvd);
 stopButton.addEventListener("click", stop);
-//window.requestAnimationFrame(animate);
+window.requestAnimationFrame(dvd);
