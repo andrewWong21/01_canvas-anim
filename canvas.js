@@ -5,6 +5,17 @@ var DVDButton = document.getElementById("dvd");
 var stopButton = document.getElementById("stop");
 var requestID;
 
+// code for color-changing function from Stack Overflow
+var changeColor = function(){
+    var hex = "0123456789ABCDEF";
+    var newColor = "#";
+    for (var i = 0; i < 6; i++){
+        newColor = newColor + hex[Math.floor(Math.random() * 16)];
+    };
+
+    return newColor;
+}
+
 var pulse = function() {
     window.cancelAnimationFrame(requestID);
 
@@ -31,23 +42,26 @@ var pulse = function() {
 
 var dvd = function() {
     window.cancelAnimationFrame(requestID);
-    var speedModifierX = 3;
-    var speedModifierY = 3;
-    var radius = 30;
-    var newX = (Math.random() * (canvas.width-2*radius))+radius;
-    var newY = (Math.random() * (canvas.height-2*radius))+radius;
+    var speedModifierX = 2;
+    var speedModifierY = 2;
+    var rectWidth = 200;
+    var rectHeight = 80;
+    var newX = (Math.random() * (canvas.width-2*rectWidth))+rectWidth;
+    var newY = (Math.random() * (canvas.height-2*rectHeight))+rectHeight;
     
     var draw = function() {
         ctx.clearRect(0, 0, 800, 600);
-        ctx.arc(newX, newY, radius, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        if ((newX + radius > canvas.width)||(newX - radius < 0)){
+        ctx.fillRect(newX, newY, rectWidth, rectHeight);
+        //ctx.fill();
+        //ctx.stroke();
+        //ctx.beginPath();
+        if ((newX + rectWidth > canvas.width)||(newX < 0)){
             speedModifierX = speedModifierX * -1;
+	        ctx.fillStyle = changeColor();
         };
-        if ((newY + radius > canvas.height)||(newY - radius < 0)){
+        if ((newY + rectHeight > canvas.height)||(newY < 0)){
             speedModifierY = speedModifierY * -1;
+	        ctx.fillStyle = changeColor();
         };
         newX = newX + speedModifierX;
         newY = newY + speedModifierY;
